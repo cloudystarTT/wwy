@@ -6,38 +6,97 @@
     <title>Weathering with You</title>
 </head>
 <body>
-    
-    <img src="weather.png" >
-    <center>
-    <a href="register.php"><button class="start">Get Started</button></a></center>
+    <div class = "container">
+        <div class="sub-div">
+            <img class = "title" src="images/weather.png" >
+            <a href="register.php"><button class="start-button">Get Started</button></a></center>
+            <img class = "dotted" src="images/polka.png">
+        </div>
+    </div>
 </body>
 </html>
 
 <style>
-    html,
-    body {
-        height: 100%;
-    }
+    html, body {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                font-family: Arial, sans-serif;
+            }
+            
+            .container {
+                height: 100vh;
+                width: 100vw;
+                background: linear-gradient(to bottom, white 10%, #4C1087 90%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                box-sizing: border-box;
+            }
+            .sub-div{
+                height: 100vh;
+                width: 50vw;
+                padding-right: 40%;
+                margin-top: 90%;
+            }
 
-    body {
-        /* display: flex; */
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background: rgb(234, 234, 240);
-        background: linear-gradient(90deg , rgba(234,234,240,1) 0%,
-        rgba(79,10,167,0.9783653846153846) 100%,rgba(0,212,255,1) 100%);
-        /* background-image: linear-gradient(red,yellow,blue); */
-    }
-    img{
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .start{
-        text-align: center;
-        margin-right: 20px;
-        border-radius: 10px;
-        font-size: 30px;
-    }
+            .title {
+                font-size: 3rem;
+                font-weight: bold;
+                color: #06000D;
+                margin-bottom: -120px; /* Space between title and button */
+                width: 150%; /* 50% of the container's width */
+                height: auto; /* Maintain aspect ratio */
+                padding-bottom: 20px;
+            }
+
+            .start-button {
+                background-color: #06000D;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 90px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                color: #C497EF;
+            }
+
+            /* Add a line design to the button */
+            .start-button::before {
+                content: '';
+                position: absolute;
+                top: 398px;
+                left: 00%; /* Start the line outside the button */
+                width: 10%;
+                height: 2px; /* Thickness of the line */
+                background: black; /* Color of the line */
+                transition: left 0.3s ease; /* Animate the line */
+            }
+
+            .start-button::after {
+                content: '';
+                position: absolute;
+                bottom: 442px;
+                right: -10%; /* Start the line outside the button */
+                width: 60%;
+                height: 1.5px; /* Thickness of the line */
+                background: black; /* Color of the line */
+                transition: right 0.3s ease; /* Animate the line */
+            }
+
+            .start-button:hover {
+                background-color: #3e0d78;
+            }
+
+            .dotted {
+                margin-left: -60px;
+        
+            }
+
+    
 </style>

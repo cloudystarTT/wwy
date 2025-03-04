@@ -2,6 +2,8 @@
 
 include realpath(__DIR__ . '/app/layout/header.php');
 
+
+
 if (isset($_POST["register"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
@@ -33,6 +35,15 @@ if (isset($_POST["register"])) {
             array_push($invalid, "Email already been taken.");
         }
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+        $_SESSION['$address'] = $_POST['address'];
+
+        header("Location: login.php?userAdded");
+
+        exit;
+    }
 }
 
 ?>
@@ -48,29 +59,72 @@ if (isset($_POST["register"])) {
         align-items: center;
         padding-top: 40px;
         padding-bottom: 40px;
-        background-color: #8A5082;
+        /* background-color: #8A5082; */
     }
 
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
     .form {
         width: 100%;
         max-width: 330px;
         padding: 15px;
         margin: auto;
+        backdrop-filter: blur(10px); /* Adds a blur effect */
+        border-radius: 10px; /* Optional: adds rounded corners */
+        padding: 20px;
     }
 
+    .form input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form input[type="password"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
     .form .checkbox {
         font-weight: 400;
     }
 
-    .form .form-floating:focus-within {
-        z-index: 2;
-    }
+    /* .form .form-floating:focus-within { */
+        /* z-index: 2; */
+    /* } */
 
 </style>
 
+<div class="video-container">
+<video autoplay muted loop>
+    <source src="purple.mp4" type="video/mp4">
+    
+</video>
+</div>
 
 <main class="form">
-    <form action="register.php" method="post">
+    <form action="register.php" method="POST">
+        <h1>Hello</h1>
         <h1 class="h3 mb-3 fw-normal text-light">Register</h1>
         <?php include realpath(__DIR__ . '/errors.php') ?>
         <div class="form-floating">
@@ -94,13 +148,17 @@ if (isset($_POST["register"])) {
     </form>
 </main>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcX-e3_IzAQX0oFYEblWVOh6izY8m6rk4&libraries=places&callback=initAutocomplete" async defer></script>
-<script>
+<script src="https://api.opencagedata.com/geocode/v1/json?q=&key=e6bc165f6a054e9a8aec52844e336df1" async defer></script>
+
+<!-- <script>
+    
     function initAutocomplete() {
-        const input = document.getElementById('address');
+        const input = document.getElementById('shopAddress');
+
         const autocomplete = new google.maps.places.Autocomplete(input);
     }
-</script>
+
+</script> -->
 
 
 <?php include realpath(__DIR__ . '/app/layout/footer.php') ?>

@@ -17,6 +17,27 @@ if ($userId == 0) {
     header("Location: login.php");
 }
 
+function getWeather($address) {
+    $apiKey = '253af44e558f0b3cf5368e80addf17fd';
+    $geocodeUrl = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($address) . "&key=e6bc165f6a054e9a8aec52844e336df1";
+    
+    $geocodeResponse = file_get_contents($geocodeUrl);
+    $locationData = json_decode($geocodeResponse, true);
+  
+    
+    if (!empty($locationData['results'])) {
+        $lat = $locationData['results'][0]['geometry']['lat'];
+        $lng = $locationData['results'][0]['geometry']['lng'];
+
+        $weatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lng&appid=$apiKey&units=metric";
+        $weatherResponse = file_get_contents($weatherUrl);
+        return json_decode($weatherResponse, true);
+    }
+    return null;
+}
+
+$weatherData = getWeather($address);
+
 ?>
 <?php include realpath(__DIR__ . '/app/layout/sidebar.php') ?>
 
@@ -85,6 +106,9 @@ if ($userId == 0) {
 </head>
 <body>
 
+
+
+
 <div class="container">
     <div class="app-header d-flex justify-content-between">
         <div class="d-flex align-items-center text-center">
@@ -100,11 +124,23 @@ if ($userId == 0) {
 </div>
 
 <div class="app-body bg-light p-3">
-<div class="weather-result">
+ <div class="weather-result">
 
-</div>
+</div> 
+
+<h1>Welcome to your Dashboard</h1>
+    <div id="weather-info">
+        <?php if ($weatherData): ?>
+            <h2>Current Weather for <?php echo htmlspecialchars($weatherData['name']); ?></h2>
+            <p>Temperature: <?php echo htmlspecialchars($weatherData['main']['temp']); ?> °C</p>
+            <p>Weather: <?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?></p>
+        <?php else: ?>
+            <p>Weather data not available.</p>
+        <?php endif; ?>
+    </div>
+
     
-    <div class="weather" >
+    <!-- <div class="weather" >
         <div class="accu">  
             <img src="images/Clear.png" class="weather-icon">
             <div class="place">
@@ -128,7 +164,7 @@ if ($userId == 0) {
                 </div>    
             </div>
          </div>
-    </div> <br> <br>
+    </div> <br> <br>  -->
 
     <div>
     <p style="background-color: pink;">A message, wrapped in a gentle reminder.</p>
@@ -151,10 +187,41 @@ if ($userId == 0) {
     </div> <br>
     
         
-</div>
+</div>  
 <script>
-    const apiKey = "b60e9c717a0986350a4ce17c5b42d239";
-    const apiUrl = "http://api.weatherstack.com/current& query = New York& units = m&language=en&callback=MY_CALLBACK";
+
+// const weatherApiKey = '253af44e558f0b3cf5368e80addf17fd';
+// const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather`;
+
+// function fetchWeatherByAddress(address) {
+//   const url = `${weatherApiUrl}?q=${address}&appid=${weatherApiKey}&units=metric`;
+
+//   fetch(url)
+//     .then(response => response.json())
+//     .then(data => {
+//       displayWeather(data);
+//     })
+//     .catch(error => {
+//       console.error('Error fetching weather data:', error);
+//     });
+// }
+
+// function displayWeather(data) {
+//   const weatherElement = document.getElementById('weatherInfo');
+//   weatherElement.innerHTML = `
+//     <h2>Weather in ${data.name}</h2>
+//     <p>Temperature: ${Math.round(data.main.temp)}°C</p>
+//     <p>Description: ${data.weather[0].description}</p>
+//   `;
+
+ 
+// }
+
+
+  
+
+    // const apiKey = "b60e9c717a0986350a4ce17c5b42d239";
+    // const apiUrl = "http://api.weatherstack.com/current& query = New York& units = m&language=en&callback=MY_CALLBACK";
     
     
 
@@ -162,11 +229,11 @@ if ($userId == 0) {
     // // const searchBtn = document.querySelector(".search button");
     // // const weatherIcon = document.querySelector("weather-icon");
 
-    async function checkWeather() {
-        const response = await fetch(apiUrl + `&appid=${apiKey}`);
-        var data = await response.json();
+    // async function checkWeather() {
+    //     const response = await fetch(apiUrl + `&appid=${apiKey}`);
+    //     var data = await response.json();
 
-        console.log(data)
+    //     console.log(data)
     
 //         document.querySelector(".city").innerHTML = data.name;
 //         document.querySelector(".temp").innerHTML =Math.round (data.main.temp) + "C";
@@ -196,9 +263,9 @@ if ($userId == 0) {
             
 // searchBtn.addEventListener("click", ()=>{
 //     checkWeather(searchBox.value);
-};
+// });
 
-checkWeather();
+// checkWeather();
         // const url = 'https://api.weatherstack.com/current?access_key=b60e9c717a0986350a4ce17c5b42d239&query=Manila';
         // const options = {
         //     method: 'GET'

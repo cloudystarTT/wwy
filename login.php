@@ -49,7 +49,22 @@ if (isset($_POST["login"])) {
         align-items: center;
         padding-top: 40px;
         padding-bottom: 40px;
-        background-color: #8A5082;
+        /* background-color: #8A5082; */
+    }
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .form {
@@ -57,6 +72,9 @@ if (isset($_POST["login"])) {
         max-width: 330px;
         padding: 15px;
         margin: auto;
+        backdrop-filter: blur(10px); /* Adds a blur effect */
+        border-radius: 10px; /* Optional: adds rounded corners */
+        padding: 20px;
     }
 
     .form .checkbox {
@@ -80,6 +98,13 @@ if (isset($_POST["login"])) {
     }
 </style>
 
+<div class="video-container">
+<video autoplay muted loop>
+    <source src="purple.mp4" type="video/mp4">
+    
+</video>
+</div>
+
 
 <main class="form">
     <form action="login.php" method="post">
@@ -90,6 +115,7 @@ if (isset($_POST["login"])) {
             <label for="email">Email</label>
         </div>
         <div class="form-floating">
+            <h1>Hello world</h1>
             <input type="password" class="form-control" id="password" placeholder="Password" name="password">
             <label for="password">Password</label>
         </div>
