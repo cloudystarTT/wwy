@@ -24,7 +24,7 @@ function getWeather($address) {
     $geocodeResponse = file_get_contents($geocodeUrl);
     $locationData = json_decode($geocodeResponse, true);
   
-    
+  
     if (!empty($locationData['results'])) {
         $lat = $locationData['results'][0]['geometry']['lat'];
         $lng = $locationData['results'][0]['geometry']['lng'];
@@ -32,14 +32,16 @@ function getWeather($address) {
         $weatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lng&appid=$apiKey&units=metric";
         $weatherResponse = file_get_contents($weatherUrl);
         return json_decode($weatherResponse, true);
+
+       
     }
     return null;
 }
-
 $weatherData = getWeather($address);
 
 ?>
 <?php include realpath(__DIR__ . '/app/layout/sidebar.php') ?>
+
 
 <style>
 
@@ -102,7 +104,7 @@ $weatherData = getWeather($address);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather API Example</title>
+    <title>Weathering with you </title>
 </head>
 <body>
 
@@ -124,21 +126,42 @@ $weatherData = getWeather($address);
 </div>
 
 <div class="app-body bg-light p-3">
- <div class="weather-result">
+ <!-- <div class="weather-result">
 
-</div> 
+</div>  -->
 
-<h1>Welcome to your Dashboard</h1>
-    <div id="weather-info">
-        <?php if ($weatherData): ?>
-            <h2>Current Weather for <?php echo htmlspecialchars($weatherData['name']); ?></h2>
-            <p>Temperature: <?php echo htmlspecialchars($weatherData['main']['temp']); ?> °C</p>
-            <p>Weather: <?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?></p>
-        <?php else: ?>
-            <p>Weather data not available.</p>
-        <?php endif; ?>
-    </div>
+<div id="weather-info">
+    <?php if ($weatherData): ?>
+        <h2>Current Weather for <?php echo htmlspecialchars($weatherData['name']); ?></h2>
+        <p>Temperature: <?php echo htmlspecialchars($weatherData['main']['temp']); ?> °C</p>
+        <p>Weather: <?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?></p>
+        
+      
+        
+        <script>
 
+            function sendReminder(weatherCondition) {
+                let reminderMessage = '';
+                if (weatherCondition.toLowerCase() === 'rain') {
+                    reminderMessage = 'Don\'t forget to bring an umbrella!';
+                } else if (weatherCondition.toLowerCase() === 'clear') {
+                    reminderMessage = 'It\'s sunny! Don\'t forget your sunglasses and water!';
+                } else if (weatherCondition.toLowerCase() === 'clouds') {
+                    reminderMessage = 'It might be cloudy, consider bringing a light jacket!';
+                }
+                if (reminderMessage) {
+                    alert(reminderMessage);
+                }
+            }
+
+            // Call the function with the weather description
+            sendReminder('<?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?>');
+        </script>
+
+    <?php else: ?>
+        <p>Weather data not available.</p>
+    <?php endif; ?>
+</div>
     
     <!-- <div class="weather" >
         <div class="accu">  
@@ -188,13 +211,18 @@ $weatherData = getWeather($address);
     
         
 </div>  
+
+
+
+
 <script>
 
+
 // const weatherApiKey = '253af44e558f0b3cf5368e80addf17fd';
-// const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather`;
+// const weatherApiUrl = https://api.openweathermap.org/data/2.5/weather;
 
 // function fetchWeatherByAddress(address) {
-//   const url = `${weatherApiUrl}?q=${address}&appid=${weatherApiKey}&units=metric`;
+//   const url = ${weatherApiUrl}?q=${address}&appid=${weatherApiKey}&units=metric;
 
 //   fetch(url)
 //     .then(response => response.json())
@@ -208,17 +236,17 @@ $weatherData = getWeather($address);
 
 // function displayWeather(data) {
 //   const weatherElement = document.getElementById('weatherInfo');
-//   weatherElement.innerHTML = `
+//   weatherElement.innerHTML = 
 //     <h2>Weather in ${data.name}</h2>
 //     <p>Temperature: ${Math.round(data.main.temp)}°C</p>
 //     <p>Description: ${data.weather[0].description}</p>
-//   `;
+//   ;
 
  
 // }
 
 
-  
+
 
     // const apiKey = "b60e9c717a0986350a4ce17c5b42d239";
     // const apiUrl = "http://api.weatherstack.com/current& query = New York& units = m&language=en&callback=MY_CALLBACK";
@@ -230,7 +258,7 @@ $weatherData = getWeather($address);
     // // const weatherIcon = document.querySelector("weather-icon");
 
     // async function checkWeather() {
-    //     const response = await fetch(apiUrl + `&appid=${apiKey}`);
+    //     const response = await fetch(apiUrl + &appid=${apiKey});
     //     var data = await response.json();
 
     //     console.log(data)
@@ -282,7 +310,7 @@ $weatherData = getWeather($address);
         // }
 
         // fetchWeatherData(); // Call the function to fetch data
-// </script>
+</script>
 </body>
 </html>
 
@@ -292,4 +320,3 @@ $weatherData = getWeather($address);
 <script src="./public/js/main.js"></script>
 <?php include realpath(__DIR__ . '/app/layout/navbar.php') ?>
 <?php include realpath(__DIR__ . '/app/layout/footer.php') ?>
-

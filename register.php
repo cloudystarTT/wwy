@@ -124,7 +124,6 @@ if (isset($_POST["register"])) {
 
 <main class="form">
     <form action="register.php" method="POST">
-        <h1>Hello</h1>
         <h1 class="h3 mb-3 fw-normal text-light">Register</h1>
         <?php include realpath(__DIR__ . '/errors.php') ?>
         <div class="form-floating">

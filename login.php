@@ -115,7 +115,6 @@ if (isset($_POST["login"])) {
             <label for="email">Email</label>
         </div>
         <div class="form-floating">
-            <h1>Hello world</h1>
             <input type="password" class="form-control" id="password" placeholder="Password" name="password">
             <label for="password">Password</label>
         </div>
