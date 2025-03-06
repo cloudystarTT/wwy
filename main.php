@@ -126,63 +126,47 @@ $weatherData = getWeather($address);
 
 <!-- Body -->
     <div class="app-body bg-light p-3">
-
-
-        <div id="weather-info">
-            <?php if ($weatherData): ?>
-                <h2>Current Weather for <?php echo htmlspecialchars($weatherData['name']); ?></h2>
-                <p>Temperature: <?php echo htmlspecialchars($weatherData['main']['temp']); ?> °C</p>
-                <p>Weather: <?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?></p>
-        
-      
+    <div id="weather-info">
+        <?php if ($weatherData): ?>
+            <h2>Current Weather for <?php echo htmlspecialchars($weatherData['name']); ?></h2>
+            <p>Temperature: <?php echo htmlspecialchars($weatherData['main']['temp']); ?> °C</p>
+            <p>Weather: <?php echo htmlspecialchars($weatherData['weather'][0]['main']); ?></p>
         <?php else: ?>
             <p>Weather data not available.</p>
-            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- Reminder -->
+    <div id="reminder-section">
+        <h3>Reminder!!</h3>
+        <div>
+            <p id="remind">Reminder</p>       
         </div>
-
-<!-- Reminder -->
-    <div>
-    <p style="background-color: pink;">A message, wrapped in a gentle reminder.</p>
-    </div> <br>
-
-    <div>
-        <p style="background-color: red;" > Task: | Due: Drink some water! 💧</p>
-    </div> <br>
-
-    <div>
-        <p style="background-color: blue;"> ✅ Task: | Due: Remember to take breaks 🌸</p>
-    </div> <br>
-
-    <div>
-        <p style="background-color:yellow;"> 💭 Feedback: | From: Us
-                Great job! Keep it up! 🌟
-                You're doing amazing! 💫
-                Stay awesome! ⭐️
-                You got this! 💪</p>
-    </div> <br>
-    
-        
+    </div> 
 </div>  
 
 <script>
-            function sendReminder(weatherCondition) {
-                let reminderMessage = '';
-                if (weatherCondition.toLowerCase() === 'rain') {
-                    reminderMessage = 'Don\'t forget to bring an umbrella!';
-                } else if (weatherCondition.toLowerCase() === 'clear') {
-                    reminderMessage = 'It\'s sunny! Don\'t forget your sunglasses and water!';
-                } else if (weatherCondition.toLowerCase() === 'clouds') {
-                    reminderMessage = 'It might be cloudy, consider bringing a light jacket!';
-                }
-                if (reminderMessage) {
-                    alert(reminderMessage);
-                }
-            }
+    function sendReminder(weatherCondition) {
+        let reminderMessage = '';
+        if (weatherCondition.toLowerCase() === 'rain') {
+            reminderMessage = 'Don\'t forget to bring an umbrella!';
+        } else if (weatherCondition.toLowerCase() === 'clear') {
+            reminderMessage = 'Wear sunscreen (SPF 30+) to protect your skin.Stay hydrated and drink plenty of water.Wear a hat and sunglasses to shield from direct sun exposure.Avoid excessive outdoor activities during peak hours (10 AM - 4 PM).Wear light, breathable clothing to stay cool.';
+        } else if (weatherCondition.toLowerCase() === 'clouds') {
+            reminderMessage = 'It might be cloudy, consider bringing a light jacket!';
+        } else if (weatherCondition.toLowerCase() === 'drizzle') {
+            reminderMessage = 'There\'s a light drizzle. You might want an umbrella!';
+        } else if (weatherCondition.toLowerCase() === 'mist') {
+            reminderMessage = 'It\'s misty outside. Drive carefully!';
+        }
 
-            // Call the function with the weather description
-            sendReminder('<?php echo htmlspecialchars($weatherData['weather'][0]['description']); ?>');
-        </script>
+        // Display the reminder in the <p> element
+        document.getElementById('remind').innerText = reminderMessage;
+    }
 
+    // Call the function with the weather description
+    sendReminder('<?php echo htmlspecialchars($weatherData['weather'][0]['main']); ?>');
+</script>
 
 </body>
 </html>
